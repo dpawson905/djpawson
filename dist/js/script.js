@@ -1,2 +1,2 @@
-
+const body=document.querySelector("body"),menuCheckbox=document.querySelector(".navigation__checkbox");menuCheckbox.addEventListener("change",(()=>body.classList.toggle("u-hide-overflow-y")));
 //# sourceMappingURL=script.js.map

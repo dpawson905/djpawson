@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"script.js"}
+{"version":3,"sources":["script.js"],"names":["body","document","querySelector","menuCheckbox","addEventListener","classList","toggle"],"mappings":"AAAA,MAAMA,KAAOC,SAASC,cAAc,QAC9BC,aAAeF,SAASC,cAAc,yBAO5CC,aAAaC,iBAAiB,UAAU,IACtCJ,KAAKK,UAAUC,OAAO","file":"script.js"}
