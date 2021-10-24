@@ -18,7 +18,7 @@ body {
       font-size: 6rem;
       font-weight: 400;
       letter-spacing: 3.5rem;
-      animation: moveInLeft 1s ease-out;
+      // animation: moveInLeft 1s ease-out;
 
       @include respond(phone) {
           letter-spacing: 1rem;
@@ -43,6 +43,10 @@ body {
   font-size: $default-font-size;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.heading-dark {
+  color: $color-grey-dark;
 }
 
 .paragraph {
