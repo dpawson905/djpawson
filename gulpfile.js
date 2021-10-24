@@ -1,16 +1,23 @@
 const sass = require("gulp-sass")(require("sass"));
 const postcss = require("gulp-postcss");
 const terser = require("gulp-terser");
+const html = require("gulp-htmlmin");
 const { src, dest, watch, series } = require("gulp");
 const autoprefixer = require('autoprefixer');
 const cssnano = require("cssnano");
 const browersync = require("browser-sync").create();
 
+// HTML Task
+function htmlTask() {
+  return src("index.html")
+    .pipe(html({ collapseWhitespace: true }))
+    .pipe(dest("dist/"))
+}
+
 // Sass Task
 function scssTask() {
   var plugins = [
-    autoprefixer(),
-    cssnano()
+    autoprefixer()
   ]
   return src("app/scss/style.scss", { sourcemaps: true })
     .pipe(sass())
@@ -18,11 +25,27 @@ function scssTask() {
     .pipe(dest("dist/css", { sourcemaps: "." }));
 }
 
+function scssTaskMin() {
+  var plugins = [
+    autoprefixer(),
+    cssnano()
+  ]
+  return src("app/scss/style.scss", { sourcemaps: true })
+    .pipe(sass())
+    .pipe(postcss(plugins))
+    .pipe(dest("dist/css/minified", { sourcemaps: "." }));
+}
+
 // Javascript Task
 function jsTask() {
   return src("app/js/script.js", { sourcemaps: true })
+    .pipe(dest("dist/js/", { sourcemaps: "." }));
+}
+
+function jsTaskMin() {
+  return src("app/js/script.js", { sourcemaps: true })
     .pipe(terser())
-    .pipe(dest("dist/js", { sourcemaps: "." }));
+    .pipe(dest("dist/js/minified", { sourcemaps: "." }));
 }
 
 // BrowserSync Task
@@ -45,9 +68,9 @@ function watchTask() {
   watch("*.html", browersyncReload);
   watch(
     ["app/scss/**/*.scss", "app/js/**/*.js"],
-    series(scssTask, jsTask, browersyncReload)
+    series(htmlTask, scssTask, scssTaskMin, jsTask, jsTaskMin, browersyncReload)
   );
 }
 
 // Defalt Gulp task
-exports.default = series(scssTask, jsTask, browersyncServe, watchTask);
+exports.default = series(htmlTask, scssTask, scssTaskMin, jsTask, jsTaskMin, browersyncServe, watchTask);
